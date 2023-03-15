@@ -45,6 +45,8 @@
 
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
+var liveChat_eabled = liveChat_eabled || true;
+var videoChat_enabled = videoChat_enabled || true;
 var surflySettings = surflySettings || {};
 
 var chatSrc = document.createElement("script");
