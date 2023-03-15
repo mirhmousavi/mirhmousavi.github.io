@@ -46,9 +46,9 @@
 
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
-var showLiveChatButton = showLiveChatButton || true;
-var showVideoChatButton = showVideoChatButton || true;
-var surflySettings = surflySettings || {};
+var showLiveChatButton = typeof showLiveChatButton === 'undefined' ? true : false;
+var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : false;
+var surflySettings = typeof surflySettings === 'undefined' ? {} : surflySettings;
 
 var chatSrc = document.createElement("script");
 chatSrc.src = NicHomeURL + "/inContact/ChatClient/js/embed.min.js";
@@ -141,7 +141,7 @@ function createVideochatSession() {
 		window.nicVideochatContactId = event.userData.contactId;
 	}).on("session_ended", function(session, event) {
 		console.log("Videochat session ended");
-		showVideoChatButton && createVideochatButton();
+		createVideochatButton();
 		endWorkItem(window.nicVideochatContactId);
 	}).create();
 }
@@ -185,7 +185,7 @@ function createSurflySession(contactId, inviteType) {
 		}).on("session_ended", function(session, event) {
 			console.log("Regular session ended, updating Studio");
 			updateStudioScript(contactId, 'cobrowse');
-			showVideoChatButton && createVideochatButton();
+			createVideochatButton();
 		}).create();
 	} else if (inviteType == 'videochat') {
 		var regularSession = Surfly.session({
@@ -210,7 +210,7 @@ function createSurflySession(contactId, inviteType) {
 		}).on("session_ended", function(session, event) {
 			console.log("Regular session ended, updating Studio");
 			updateStudioScript(contactId, 'videochat');
-			showVideoChatButton && createVideochatButton();
+			createVideochatButton();
 		}).create();
 	}
 }
@@ -235,7 +235,9 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
-				showVideoChatButton && createVideochatButton();
+				if (showVideoChatButton) {
+					createVideochatButton();
+				};
 
 				const drone = new Scaledrone(scaleDroneChannelId);
 
@@ -333,7 +335,9 @@ function loadSurfly() {
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
 				
-				showLiveChatButton && initializeChatNiC();
+				if (showLiveChatButton) {
+					initializeChatNiC();
+				};
 			}
 		}
 	});
