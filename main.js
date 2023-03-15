@@ -54,8 +54,7 @@ console.log('showLiveChatButton: ' + showLiveChatButton);
 console.log('showVideoChatButton: ' + showVideoChatButton);
 
 if (showLiveChatButton === false && showVideoChatButton === false) {
-	console.log('Surfly NIC integration: No buttons to show');
-	return;
+	throw new Error('Surfly NIC integration: No buttons to show');
 };
 
 var chatSrc = document.createElement("script");
