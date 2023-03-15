@@ -24,7 +24,7 @@
  *     <body>
  *         ...
  *         <script>
- * 			   var showLiveChatButton = true;
+ * 			   var showLiveChatButton  = true;
  * 			   var showVideoChatButton = true;
  *             var scaleDroneChannelId = 'fygLrCqVZUYQZL6';
  *             var nicBusNumber        = '1809119';
@@ -47,8 +47,16 @@
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
 var showLiveChatButton = typeof showLiveChatButton === 'undefined' ? true : showLiveChatButton;
-var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : showLiveChatButton;
+var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : showVideoChatButton;
 var surflySettings = typeof surflySettings === 'undefined' ? {} : surflySettings;
+
+console.log('showLiveChatButton: ' + showLiveChatButton);
+console.log('showVideoChatButton: ' + showVideoChatButton);
+
+if (showLiveChatButton === false && showVideoChatButton === false) {
+	console.log('Surfly NIC integration: No buttons to show');
+	return;
+};
 
 var chatSrc = document.createElement("script");
 chatSrc.src = NicHomeURL + "/inContact/ChatClient/js/embed.min.js";
