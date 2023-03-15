@@ -2,7 +2,7 @@
  * Surfly NIC integration
  *
  * Make sure the following variables are initialized based on your configuration before importing this script
- *	   showLiveChatButton
+ *     showLiveChatButton
  *     showVideoChatButton
  *     scaleDroneChannelId
  *     nicBusNumber
@@ -24,8 +24,8 @@
  *     <body>
  *         ...
  *         <script>
- * 			   var showLiveChatButton  = true;
- * 			   var showVideoChatButton = true;
+ *             var showLiveChatButton  = true;
+ *             var showVideoChatButton = true;
  *             var scaleDroneChannelId = 'fygLrCqVZUYQZL6';
  *             var nicBusNumber        = '1809119';
  *             var nicChatPOC          = '1605d121-489c-4df4-83b1-334dbeb0a781u';
@@ -49,9 +49,6 @@ let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 var showLiveChatButton = typeof showLiveChatButton === 'undefined' ? true : showLiveChatButton;
 var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : showVideoChatButton;
 var surflySettings = typeof surflySettings === 'undefined' ? {} : surflySettings;
-
-console.log('showLiveChatButton: ' + showLiveChatButton);
-console.log('showVideoChatButton: ' + showVideoChatButton);
 
 if (showLiveChatButton === false && showVideoChatButton === false) {
 	throw new Error('Surfly NIC integration: No buttons to show');
@@ -339,8 +336,8 @@ function loadSurfly() {
 
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
-				
-				showLiveChatButton && initializeChatNiC();
+
+                showLiveChatButton && initializeChatNiC();
 			}
 		}
 	});
