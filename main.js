@@ -23,8 +23,8 @@
  *     <body>
  *         ...
  *         <script>
- * 			   var liveChat_eabled = true;
- * 			   var videoChat_enabled = true;
+ * 			   var liveChatEabled = true;
+ * 			   var videoChatEnabled = true;
  *             var scaleDroneChannelId = 'fygLrCqVZUYQZL6';
  *             var nicBusNumber        = '1809119';
  *             var nicChatPOC          = '1605d121-489c-4df4-83b1-334dbeb0a781u';
@@ -45,8 +45,8 @@
 
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
-var liveChat_eabled = liveChat_eabled || true;
-var videoChat_enabled = videoChat_enabled || true;
+var liveChatEabled = liveChat_eabled || true;
+var videoChatEnabled = videoChat_enabled || true;
 var surflySettings = surflySettings || {};
 
 var chatSrc = document.createElement("script");
@@ -234,7 +234,7 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
-				if (videoChat_enabled) {
+				if (videoChatEnabled) {
 					createVideochatSession();
 				};
 
@@ -334,7 +334,7 @@ function loadSurfly() {
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
 				
-				if (liveChat_enabled) {
+				if (liveChatEnabled) {
 					initializeChatNiC();
 				};
 			}
