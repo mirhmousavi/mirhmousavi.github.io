@@ -23,6 +23,8 @@
  *     <body>
  *         ...
  *         <script>
+ * 			   var liveChat_eabled = true;
+ * 			   var videoChat_enabled = true;
  *             var scaleDroneChannelId = 'fygLrCqVZUYQZL6';
  *             var nicBusNumber        = '1809119';
  *             var nicChatPOC          = '1605d121-489c-4df4-83b1-334dbeb0a781u';
@@ -230,6 +232,10 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
+				if (videoChat_enabled) {
+					createVideochatSession();
+				};
+
 				const drone = new Scaledrone(scaleDroneChannelId);
 
 				drone.on('open', error => {
@@ -325,8 +331,10 @@ function loadSurfly() {
 
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
-
-				initializeChatNiC();
+				
+				if (liveChat_enabled) {
+					initializeChatNiC();
+				};
 			}
 		}
 	});
