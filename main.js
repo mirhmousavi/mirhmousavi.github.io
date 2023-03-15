@@ -2,7 +2,8 @@
  * Surfly NIC integration
  *
  * Make sure the following variables are initialized based on your configuration before importing this script
- *
+ *	   liveChatEnabled
+ *     videoChatEnabled
  *     scaleDroneChannelId
  *     nicBusNumber
  *     nicChatPOC
@@ -23,7 +24,7 @@
  *     <body>
  *         ...
  *         <script>
- * 			   var liveChatEabled = true;
+ * 			   var liveChatEnabled = true;
  * 			   var videoChatEnabled = true;
  *             var scaleDroneChannelId = 'fygLrCqVZUYQZL6';
  *             var nicBusNumber        = '1809119';
@@ -45,7 +46,7 @@
 
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
-var liveChatEabled = liveChat_eabled || true;
+var liveChatEnabled = liveChatEnabled || true;
 var videoChatEnabled = videoChat_enabled || true;
 var surflySettings = surflySettings || {};
 
@@ -147,6 +148,8 @@ function createVideochatSession() {
 
 
 function createVideochatButton() {
+	if (videoChatEnabled == false) return;
+
 	Surfly.button();
 	var surflyIframe = document.getElementById("surfly-api-frame");
 	var surflyButton = surflyIframe.contentWindow.document.getElementsByClassName("surfly-button-visible")[0];
@@ -234,9 +237,7 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
-				if (videoChatEnabled) {
-					createVideochatSession();
-				};
+				createVideochatButton();
 
 				const drone = new Scaledrone(scaleDroneChannelId);
 
