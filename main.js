@@ -46,8 +46,8 @@
 
 let NicHomeURL = "https://home-" + clusterNiC + ".nice-incontact.com";
 
-var showLiveChatButton = typeof showLiveChatButton === 'undefined' ? true : false;
-var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : false;
+var showLiveChatButton = typeof showLiveChatButton === 'undefined' ? true : showLiveChatButton;
+var showVideoChatButton = typeof showVideoChatButton === 'undefined' ? true : showLiveChatButton;
 var surflySettings = typeof surflySettings === 'undefined' ? {} : surflySettings;
 
 var chatSrc = document.createElement("script");
@@ -141,16 +141,13 @@ function createVideochatSession() {
 		window.nicVideochatContactId = event.userData.contactId;
 	}).on("session_ended", function(session, event) {
 		console.log("Videochat session ended");
-		createVideochatButton();
+		showVideoChatButton && createVideochatButton();
 		endWorkItem(window.nicVideochatContactId);
 	}).create();
 }
 
 
 function createVideochatButton() {
-	if (showVideoChatButton === false)
-		return;;
-
 	Surfly.button();
 	var surflyIframe = document.getElementById("surfly-api-frame");
 	var surflyButton = surflyIframe.contentWindow.document.getElementsByClassName("surfly-button-visible")[0];
@@ -188,7 +185,7 @@ function createSurflySession(contactId, inviteType) {
 		}).on("session_ended", function(session, event) {
 			console.log("Regular session ended, updating Studio");
 			updateStudioScript(contactId, 'cobrowse');
-			createVideochatButton();
+			showVideoChatButton && createVideochatButton();
 		}).create();
 	} else if (inviteType == 'videochat') {
 		var regularSession = Surfly.session({
@@ -213,7 +210,7 @@ function createSurflySession(contactId, inviteType) {
 		}).on("session_ended", function(session, event) {
 			console.log("Regular session ended, updating Studio");
 			updateStudioScript(contactId, 'videochat');
-			createVideochatButton();
+			showVideoChatButton && createVideochatButton();
 		}).create();
 	}
 }
@@ -238,7 +235,7 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
-				createVideochatButton();
+				showVideoChatButton && createVideochatButton();
 
 				const drone = new Scaledrone(scaleDroneChannelId);
 
@@ -336,7 +333,7 @@ function loadSurfly() {
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
 				
-				initializeChatNiC();
+				showLiveChatButton && initializeChatNiC();
 			}
 		}
 	});
@@ -344,9 +341,6 @@ function loadSurfly() {
 
 
 function initializeChatNiC() {
-	if (showLiveChatButton === false)
-		return;
-
     icPatronChat.init({
 		serverHost: NicHomeURL,
 		bus_no: nicBusNumber,
