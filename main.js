@@ -148,6 +148,9 @@ function createVideochatSession() {
 
 
 function createVideochatButton() {
+	if (showVideoChatButton === false)
+		return;;
+
 	Surfly.button();
 	var surflyIframe = document.getElementById("surfly-api-frame");
 	var surflyButton = surflyIframe.contentWindow.document.getElementsByClassName("surfly-button-visible")[0];
