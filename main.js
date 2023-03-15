@@ -119,9 +119,6 @@ function endWorkItem(contactId) {
 
 
 function createVideochatSession() {
-	if (showVideoChatButton === false)
-		return;
-
 	var videochatSession = Surfly.session({
 		block_until_agent_joins: false,
 		start_with_videochat_on: true,
