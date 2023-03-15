@@ -119,6 +119,9 @@ function endWorkItem(contactId) {
 
 
 function createVideochatSession() {
+	if (showVideoChatButton === false)
+		return;
+
 	var videochatSession = Surfly.session({
 		block_until_agent_joins: false,
 		start_with_videochat_on: true,
@@ -235,9 +238,7 @@ function loadSurfly() {
 	Surfly.init(settings, function(initResult) {
 		if (initResult.success) {
 			if (!Surfly.isInsideSession) {
-				if (showVideoChatButton) {
-					createVideochatButton();
-				};
+				createVideochatButton();
 
 				const drone = new Scaledrone(scaleDroneChannelId);
 
@@ -335,9 +336,7 @@ function loadSurfly() {
 					localStorage.setItem(nicBusNumber + "-uniquePageId", uniquePageId);
 				}
 				
-				if (showLiveChatButton) {
-					initializeChatNiC();
-				};
+				initializeChatNiC();
 			}
 		}
 	});
@@ -345,6 +344,9 @@ function loadSurfly() {
 
 
 function initializeChatNiC() {
+	if (showLiveChatButton === false)
+		return;
+
     icPatronChat.init({
 		serverHost: NicHomeURL,
 		bus_no: nicBusNumber,
